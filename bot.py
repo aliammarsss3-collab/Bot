@@ -20,9 +20,9 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 # 🗄️ إعدادات قاعدة البيانات
 # ======================
 DB_PATH = "sendako.db"
-BOT_TOKEN = ""  # استبدل بتوكنك الحقيقي
-CHAT_IDS = [""]  # معرفات المجموعات/القنوات التي ترسل إليها OTP
-ADMIN_IDS = [8503115816]  # معرفات الأدمن الرئيسيين
+BOT_TOKEN = "8734225282:AAEMhd8URoLIA6uTxYsVGxrch7-DT8ttA9c"  # استبدل بتوكنك الحقيقي
+CHAT_IDS = ["6759191586"]  # معرفات المجموعات/القنوات التي ترسل إليها OTP
+ADMIN_IDS = [6759191586]  # معرفات الأدمن الرئيسيين
 
 # ======================
 # إعدادات السرعة
