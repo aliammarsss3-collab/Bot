@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>تفعيل التطبيق</title>
+<style>
+  body { font-family: -apple-system, system-ui, sans-serif; background:#0d0d12; color:#eee; display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0; }
+  .card { background:#17171f; padding:32px 28px; border-radius:16px; width:90%; max-width:380px; box-shadow:0 10px 30px rgba(0,0,0,.4); }
+  h1 { font-size:20px; margin:0 0 20px; text-align:center; }
+  input { width:100%; box-sizing:border-box; padding:14px; font-size:18px; letter-spacing:2px; text-align:center; border-radius:10px; border:1px solid #333; background:#0d0d12; color:#fff; margin-bottom:14px; }
+  button { width:100%; padding:14px; font-size:16px; border:none; border-radius:10px; background:#0a84ff; color:#fff; font-weight:600; cursor:pointer; }
+  button:disabled { opacity:.5; }
+  #result { margin-top:16px; text-align:center; font-size:14px; line-height:1.6; }
+  a.install { display:inline-block; margin-top:10px; background:#30d158; color:#062; padding:10px 18px; border-radius:10px; text-decoration:none; font-weight:700; }
+  .err { color:#ff6961; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>أدخل كود الاشتراك</h1>
+    <input id="code" maxlength="10" placeholder="XXXXXXXXXX" autocapitalize="characters">
+    <button id="go">تفعيل وتنزيل</button>
+    <div id="result"></div>
+  </div>
+
+<script>
+const btn = document.getElementById('go');
+const result = document.getElementById('result');
+btn.addEventListener('click', async () => {
+  const code = document.getElementById('code').value.trim();
+  if (!code) return;
+  btn.disabled = true;
+  result.innerHTML = 'جارِ التحقق...';
+  try {
+    const res = await fetch('/api/verify-code', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      const messages = { invalid_code: 'الكود غير صحيح', expired: 'انتهت صلاحية الكود', revoked: 'الكود ملغى' };
+      result.innerHTML = `<span class="err">${messages[data.error] || 'حدث خطأ'}</span>`;
+    } else {
+      result.innerHTML = `
+        <div>${data.app_name}</div>
+        <div>صالح حتى: ${new Date(data.expires_at).toLocaleDateString('ar')}</div>
+        <a class="install" href="${data.install_link}">تثبيت على الآيفون</a>
+      `;
+    }
+  } catch (e) {
+    result.innerHTML = '<span class="err">تعذر الاتصال بالسيرفر</span>';
+  }
+  btn.disabled = false;
+});
+</script>
+</body>
+</html>

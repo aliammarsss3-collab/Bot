@@ -1,0 +1,15 @@
+{
+  "name": "ipa-app-store",
+  "version": "1.0.0",
+  "description": "Private iOS app store: enterprise IPA distribution gated by subscription codes",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "better-sqlite3": "^11.3.0",
+    "multer": "^1.4.5-lts.1",
+    "nanoid": "^3.3.7"
+  }
+}
