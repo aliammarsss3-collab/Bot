@@ -2,14 +2,16 @@ FROM node:20-bookworm
 
 # Build tools + zsign dependencies
 RUN apt-get update && apt-get install -y \
-    git cmake build-essential libssl-dev zlib1g-dev \
+    git g++ make pkg-config libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Build zsign from source
+# Build zsign from source (official Linux build: make in build/linux)
 RUN git clone https://github.com/zhlynn/zsign.git /tmp/zsign \
     && cd /tmp/zsign/build/linux \
-    && ./build.sh \
-    && cp zsign /usr/local/bin/zsign \
+    && make clean && make \
+    && BIN="$(find /tmp/zsign -type f -name zsign -perm -u+x | head -n 1)" \
+    && test -n "$BIN" \
+    && cp "$BIN" /usr/local/bin/zsign \
     && rm -rf /tmp/zsign
 
 WORKDIR /app
