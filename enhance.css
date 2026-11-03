@@ -1,0 +1,41 @@
+/* مون ستور — تحسينات التفاعل والاحترافية */
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+.scroll-progress{position:fixed;top:0;inset-inline:0;height:3px;z-index:60;transform-origin:100% 50%;transform:scaleX(var(--p,0));background:linear-gradient(90deg,var(--gold),var(--red));pointer-events:none}
+.header{transition:height .3s,box-shadow .3s,background .3s}
+.header.scrolled{height:58px;box-shadow:0 10px 30px rgba(0,0,0,.45);background:rgba(8,9,13,.97)}
+.main-nav a{position:relative}
+.main-nav a:after{content:"";position:absolute;inset-inline:0;bottom:-6px;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .3s}
+.main-nav a.active:after,.main-nav a:hover:after{transform:scaleX(1)}
+.main-nav a.active{color:var(--gold)}
+.to-top{position:fixed;bottom:84px;left:22px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,211,76,.4);background:rgba(21,18,11,.92);color:var(--gold);cursor:pointer;z-index:20;opacity:0;transform:translateY(14px);pointer-events:none;transition:.3s}
+.to-top:before{content:"↑";font-size:18px}
+.to-top.show{opacity:1;transform:none;pointer-events:auto}
+.to-top:hover{background:var(--gold);color:#161006}
+.hero-scene .figure,.hero-scene .halo{transition:translate .25s ease-out}
+.tilt{transition:transform .15s ease-out,border-color .28s,box-shadow .28s;will-change:transform}
+.cart-open.bump{animation:bump .45s}
+@keyframes bump{40%{transform:scale(1.25) rotate(-8deg)}}
+.qty{display:inline-flex;align-items:center;gap:8px;margin-top:6px}
+.qty button{width:26px;height:26px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--text);cursor:pointer;font-size:15px;line-height:1}
+.qty button:hover{border-color:var(--gold);color:var(--gold)}
+.qty b{min-width:18px;text-align:center}
+.cart-row small{display:block;color:var(--muted);margin-top:3px}
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.35);transform:scale(0);animation:rip .6s linear;pointer-events:none}
+@keyframes rip{to{transform:scale(4);opacity:0}}
+.button,.add-cart{position:relative;overflow:hidden}
+.reveal-done{transition-delay:0s!important}
+@media(prefers-reduced-motion:reduce){.tilt,.header,.to-top{transition:none}.ripple,.cart-open.bump{animation:none}}
+
+/* الهيرو: الشخصية على اليسار والنص على اليمين بدون تداخل */
+@media(min-width:1000px){
+ .hero{background:radial-gradient(ellipse at 24% 44%,#5a4314 0,#251d0d 25%,#0c0b09 58%,#090806 78%)}
+ .hero:before{background:linear-gradient(270deg,#090806 8%,rgba(9,8,6,.78) 40%,transparent 85%),radial-gradient(ellipse at 12% 55%,rgba(245,190,31,.19),transparent 45%)}
+ .hero-scene{inset-inline-start:auto;inset-inline-end:0;width:46%}
+}
+/* فلاتر المنتجات */
+.filter-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.filter-chips button{padding:7px 16px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;font:inherit;font-size:13px;transition:.25s}
+.filter-chips button:hover{border-color:var(--gold);color:var(--text)}
+.filter-chips button.on{background:var(--gold);border-color:var(--gold);color:#161006;font-weight:700}
+.product-card{transition:opacity .3s,transform .28s,border-color .28s,box-shadow .28s}
+.product-card.out{opacity:0;transform:scale(.94)}
